@@ -1,0 +1,6 @@
+[submodule "skills/cc-skills-golang"]
+	path = skills/cc-skills-golang
+	url = https://github.com/samber/cc-skills-golang.git
+[submodule "skills/stop-slop"]
+	path = skills/stop-slop
+	url = https://github.com/hardikpandya/stop-slop.git
