@@ -1,6 +1,6 @@
 ---
 name: golang-gopls-cli
-description: "Golang: find where a function, type, method, or variable is used, called, defined, declared, or implemented — use the `gopls` CLI with `-remote=auto` instead of grep/rg/find. gopls is semantic: it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. Apply when the user asks to find callers, call sites, usages, references, declarations, or implementations of a Go identifier, or when you are about to use grep/rg/find to locate a Go identifier. Not for non-Go files, general text search, or file discovery by glob pattern. For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`."
+description: "Golang identifier search via the gopls CLI — load FIRST whenever you need to find where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, declared, referenced, or implemented. ALWAYS use instead of grep/rg/find for Go identifiers: gopls is semantic and never returns false positives from comments, strings, or same-named symbols in other packages. Use when the user asks to find usages, call sites, references, definitions, or implementations of a Go identifier, or when you are about to run grep/rg/find on .go files to locate a symbol. Not for non-Go files, general text search, or file discovery by glob pattern. For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`."
 user-invocable: false
 license: MIT
 compatibility: Designed for Claude Code or similar AI coding agents, and for projects using Golang. Requires the gopls binary.
@@ -20,9 +20,11 @@ metadata:
 allowed-tools: Read Edit Write Glob Bash(go:*) Bash(golangci-lint:*) Bash(git:*) Bash(gopls:*)
 ---
 
-## Anti-grep rule
+## CRITICAL: Never use grep/rg/find for Go identifiers
 
-Don't use grep/rg/find to locate Go identifiers. gopls is semantic — it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages.
+**STOP.** If you are about to use `grep`, `rg`, `find`, or the `Grep` tool to locate a Go identifier in `.go` files, use `gopls` instead. gopls is semantic — it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. grep does.
+
+This rule has no exceptions. Even a "quick" grep for a Go symbol can return false positives or miss cross-package references. Always use `gopls` instead.
 
 ## `-remote=auto` is mandatory
 

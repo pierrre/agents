@@ -25,6 +25,10 @@ It is the always-on correctness checklist for panics and data races; load it eve
 
 To understand a Go module's API or intended usage, prefer `go doc <pkg>` (or the `golang-pkg-go-dev` skill via `godig`) before reading its source. Drop to source when you need behavior, internals, or unexported details — `go doc` only shows exported symbols and is silent on many examples.
 
+## Go identifier search
+
+When searching for where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, or referenced, always load the `golang-gopls-cli` skill FIRST — use `gopls` instead of `grep`/`rg`/`find` for Go identifiers. gopls is semantic and avoids false positives from comments, strings, or same-named symbols in other packages.
+
 ## Local source code locations
 
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
