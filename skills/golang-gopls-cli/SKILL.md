@@ -1,6 +1,6 @@
 ---
 name: golang-gopls-cli
-description: "Golang: use the `gopls` CLI with `-remote=auto` instead of grep/rg/find to locate Go identifiers — call sites, declarations, implementations, symbol search, interface satisfaction, highlights. gopls is semantic: it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. Apply whenever you are about to use grep, rg, or find to locate a Go function, type, method, variable, or call site. Not for non-Go files, general text search, or file discovery by glob pattern. For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`."
+description: "Golang: find where a function, type, method, or variable is used, called, declared, or implemented — use the `gopls` CLI with `-remote=auto` instead of grep/rg/find. gopls is semantic: it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. Apply when the user asks to find call sites, usages, references, declarations, or implementations of a Go identifier, or when you are about to use grep/rg/find to locate a Go identifier. Not for non-Go files, general text search, or file discovery by glob pattern. For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`."
 user-invocable: false
 license: MIT
 compatibility: Designed for Claude Code or similar AI coding agents, and for projects using Golang. Requires the gopls binary.
@@ -20,15 +20,22 @@ metadata:
 allowed-tools: Read Edit Write Glob Bash(go:*) Bash(golangci-lint:*) Bash(git:*) Bash(gopls:*)
 ---
 
-**Install:** `go install golang.org/x/tools/gopls@latest`
+## Anti-grep rule
+
+Don't use grep/rg/find to locate Go identifiers. gopls is semantic — it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages.
 
 ## `-remote=auto` is mandatory
 
 Every command MUST run as `gopls -remote=auto <command>`. The flag spawns a background daemon that caches the workspace in memory and persists across invocations. First call loads the workspace (slow); subsequent calls are fast. Without it, each call re-parses the entire workspace from scratch.
 
-## Anti-grep rule
+## Primary workflow: name → position → query
 
-Don't use grep/rg/find to locate Go identifiers. gopls is semantic — it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages.
+You usually start with a name, not a position. Two steps:
+
+1. `gopls -remote=auto workspace_symbol -matcher fuzzy Do` → returns the symbol's `file:line:col`
+2. Feed that position to `references`, `definition`, `call_hierarchy`, etc.
+
+## Command reference
 
 | Task | Command | Example |
 | --- | --- | --- |
@@ -57,5 +64,7 @@ Don't use grep/rg/find to locate Go identifiers. gopls is semantic — it resolv
 ## `find`/glob stays for file discovery
 
 `find`/glob remains correct for general file discovery ("list `*_test.go` under `pkg/`"). gopls only replaces it when the goal is locating a symbol — use `workspace_symbol` then.
+
+**Install:** `go install golang.org/x/tools/gopls@latest`
 
 For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`.
