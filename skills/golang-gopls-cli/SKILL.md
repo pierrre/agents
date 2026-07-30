@@ -1,6 +1,6 @@
 ---
 name: golang-gopls-cli
-description: "Golang: find where a function, type, method, or variable is used, called, declared, or implemented — use the `gopls` CLI with `-remote=auto` instead of grep/rg/find. gopls is semantic: it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. Apply when the user asks to find call sites, usages, references, declarations, or implementations of a Go identifier, or when you are about to use grep/rg/find to locate a Go identifier. Not for non-Go files, general text search, or file discovery by glob pattern. For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`."
+description: "Golang: find where a function, type, method, or variable is used, called, defined, declared, or implemented — use the `gopls` CLI with `-remote=auto` instead of grep/rg/find. gopls is semantic: it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. Apply when the user asks to find callers, call sites, usages, references, declarations, or implementations of a Go identifier, or when you are about to use grep/rg/find to locate a Go identifier. Not for non-Go files, general text search, or file discovery by glob pattern. For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`."
 user-invocable: false
 license: MIT
 compatibility: Designed for Claude Code or similar AI coding agents, and for projects using Golang. Requires the gopls binary.
