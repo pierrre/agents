@@ -1,8 +1,10 @@
 # Global rules
 
-## Editing this file
+## Editing agent instruction files
 
-Before editing this file, confirm the change would help a future agent working on an *unrelated* task. Don't add task-specific notes, transient state, or content already covered elsewhere. Keep this file concise and non-redundant.
+This applies to any file whose purpose is durable cross-task guidance for AI agents: `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, files under `.opencode/`, and files under `skills/`.
+
+Before editing such a file, confirm the change would help a future agent working on an *unrelated* task. Don't add task-specific notes, transient state, or content already covered elsewhere. Keep these files concise and non-redundant.
 
 ## Honesty
 
