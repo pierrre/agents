@@ -4,7 +4,7 @@
 
 This applies to any file whose purpose is durable cross-task guidance for AI agents: `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, files under `.opencode/`, and files under `skills/`.
 
-Before editing such a file, confirm the change would help a future agent working on an *unrelated* task. Don't add task-specific notes, transient state, or content already covered elsewhere. Keep these files concise and non-redundant.
+Before editing such a file, confirm the change would help a future agent working on an *unrelated* task. Don't add task-specific notes, transient state, or content already covered elsewhere. Keep these files concise and non-redundant. After drafting, check for ambiguities a cold reader would hit, then compress until further cuts would lose meaning.
 
 ## Honesty
 
@@ -17,6 +17,11 @@ reasonable approaches with different tradeoffs (e.g. public API, breaking
 changes, new dependencies, architectural choices), pause and ask the user.
 Don't ask about choices already settled by conventions, surrounding code, or
 prior instructions.
+
+## Tests
+
+- New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
+- If a part can't be reasonably covered, stop and report to the user.
 
 ## Go code reviews
 
@@ -42,15 +47,10 @@ Profile format (one block per line):
     <file>:<startLine>.<startCol>,<endLine>.<endCol> <stmts> <count>
 
 - `mode: set` (default, 0/1) | `count` (int hits) | `atomic` (race-safe; auto under `-race`).
-- Blocks are statement-ranges, not lines; map a line via any block whose range contains it. Non-executable lines don't appear.
+- Blocks are statement-ranges, not lines; to check line N, find a block with `startLine ≤ N ≤ endLine` and read its count. Non-executable lines don't appear.
 - `-coverpkg=./...` instruments cross-package; `-coverprofile`/`-coverpkg` imply `-cover`.
 - Source rewriting makes `-cover` compile errors show shifted line numbers.
 - Parse the `.out` directly (e.g. `grep ' 0$'` finds uncovered blocks).
-
-## Tests
-
-- New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
-- If a part can't be reasonably covered, stop and report to the user.
 
 ## Local source code locations
 
