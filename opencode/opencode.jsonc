@@ -66,6 +66,7 @@
     }
   },
   "default_agent": "plan",
+  "subagent_depth": 10,
   //"model": "Codix-Iliad/codiX-agent",
   "enabled_providers": [
     "Codix-Iliad",
