@@ -79,12 +79,12 @@
   "permission": {
     "external_directory": {
       "*": "ask",
+      "/tmp/**": "allow",
+      "~/.agents/**": "allow",
+      "~/.config/opencode/**": "allow",
       "~/Git/**": "allow",
-      "~/go/pkg/mod/**": "allow",
-      "/home/pierre/.agents/**": "allow",
       "/usr/lib/go/**": "allow",
-      "/tmp/opencode/**": "allow",
-      "/tmp/**": "allow"
+      "~/go/pkg/mod/**": "allow"
     },
   },
   "lsp": {
