@@ -31,6 +31,22 @@ To understand a Go module's API or intended usage, prefer `go doc <pkg>` (or the
 
 When searching for where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, or referenced, always load the `golang-gopls-cli` skill FIRST — use `gopls` instead of `grep`/`rg`/`find` for Go identifiers. gopls is semantic and avoids false positives from comments, strings, or same-named symbols in other packages.
 
+## Go test coverage
+
+    go test -coverprofile=cover.out .
+    go tool cover -func=cover.out   # per-function
+    go tool cover -html=cover.out   # HTML (humans)
+
+Profile format (one block per line):
+
+    <file>:<startLine>.<startCol>,<endLine>.<endCol> <stmts> <count>
+
+- `mode: set` (default, 0/1) | `count` (int hits) | `atomic` (race-safe; auto under `-race`).
+- Blocks are statement-ranges, not lines; map a line via any block whose range contains it. Non-executable lines don't appear.
+- `-coverpkg=./...` instruments cross-package; `-coverprofile`/`-coverpkg` imply `-cover`.
+- Source rewriting makes `-cover` compile errors show shifted line numbers.
+- Parse the `.out` directly (e.g. `grep ' 0$'` finds uncovered blocks).
+
 ## Local source code locations
 
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
