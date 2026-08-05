@@ -47,6 +47,11 @@ Profile format (one block per line):
 - Source rewriting makes `-cover` compile errors show shifted line numbers.
 - Parse the `.out` directly (e.g. `grep ' 0$'` finds uncovered blocks).
 
+## Tests
+
+- New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
+- If a part can't be reasonably covered, stop and report to the user.
+
 ## Local source code locations
 
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
