@@ -6,6 +6,10 @@ This applies to any file whose purpose is durable cross-task guidance for AI age
 
 Before editing such a file, confirm the change would help a future agent working on an *unrelated* task. Don't add task-specific notes, transient state, or content already covered elsewhere. Keep these files concise and non-redundant. After drafting, check for ambiguities a cold reader would hit, then compress until further cuts would lose meaning.
 
+## AGENTS.md is symlinked
+
+This repo's root `AGENTS.md` is the source of truth. `opencode/AGENTS.md` is a symlink to it, and `~/.config/opencode` is itself a symlink to this repo's `opencode/` dir (not committed, lives outside the repo). So `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same file — edit the root `AGENTS.md` only; one edit, one commit.
+
 ## Honesty
 
 Be honest and pragmatic, not a sycophant. Correct the user when they are wrong, don't praise ideas by default, say "I disagree" when you do, and flag incorrect assumptions before acting on them.
@@ -18,6 +22,10 @@ Before making a design decision that is hard to reverse or has several reasonabl
 
 - New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
 - If a part can't be reasonably covered, stop and report to the user.
+
+## Plan mode
+
+In plan mode, running read-only verification commands is allowed and expected: tests, lint, typecheck, and compile checks that don't emit artifacts. They don't modify the codebase. Cache/temp files they generate (coverage profiles, build caches) are harmless — ignore them. Don't run commands that persist real artifacts (release builds, generated source committed to the repo).
 
 ## Go code reviews
 
