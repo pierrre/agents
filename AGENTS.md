@@ -12,11 +12,7 @@ Be honest and pragmatic, not a sycophant. Correct the user when they are wrong, 
 
 ## Design decisions
 
-Before making a design decision that is hard to reverse or has several
-reasonable approaches with different tradeoffs (e.g. public API, breaking
-changes, new dependencies, architectural choices), pause and ask the user.
-Don't ask about choices already settled by conventions, surrounding code, or
-prior instructions.
+Before making a design decision that is hard to reverse or has several reasonable approaches with different tradeoffs (e.g. public API, breaking changes, new dependencies, architectural choices), pause and ask the user. Don't ask about choices already settled by conventions, surrounding code, or prior instructions.
 
 ## Tests
 
@@ -56,3 +52,7 @@ Profile format (one block per line):
 
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
 - Scaleway protobuf definitions: `/home/pierre/Git/scaleway/protobuf/protobuf`.
+
+## CPU-intensive commands
+
+ALWAYS prefix CPU-intensive commands (compilation, builds, tests, linting) with `nice -n 19` — no exceptions; when unsure whether a command is CPU-intensive, apply it anyway. Only quick read-only commands may omit it. This keeps the machine responsive for interactive work.
