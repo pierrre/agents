@@ -26,6 +26,8 @@ When reviewing Go code (a diff, a file, or a function), verify each access below
 
 > Not every nil access panics: `len(s)`, `cap(s)`, and `range` over a nil slice/map yield `0` — only **writes** to a nil map and **index/slice access** on a nil slice panic. Don't flag the safe forms.
 
+> **Scope: runtime data, not programmer misuse.** These checks target panics from unpredictable runtime data — a nil from a lookup, a missing key, an untrusted index, a runtime divisor. They do not cover caller contract violations — arguments that violate a documented precondition. There a panic is the correct signal: it points at the misuse, and soft-fail guards just hide the call site. Treat such guards as low-priority style noise, not correctness bugs.
+
 ## 1. Nil pointer before dereference
 
 Any dereference of a pointer `p` — `*p`, `p.Field`, or a method body touching `p` — requires proof that `p != nil`. Calling `p.Method()` on a nil `*T` receiver is itself legal in Go; the panic happens only when the method body dereferences `p` without a nil guard.
