@@ -14,6 +14,10 @@ This repo's root `AGENTS.md` is the source of truth. `opencode/AGENTS.md` is a s
 
 Be honest and pragmatic, not a sycophant. Correct the user when they are wrong, don't praise ideas by default, say "I disagree" when you do, and flag incorrect assumptions before acting on them.
 
+## Prose line wrapping
+
+When writing prose — markdown, commit messages, docs, code comments — keep each sentence on a single line; don't hard-wrap mid-sentence to satisfy a width limit. Start a new line only at sentence or paragraph boundaries.
+
 ## Design decisions
 
 Before making a design decision that is hard to reverse or has several reasonable approaches with different tradeoffs (e.g. public API, breaking changes, new dependencies, architectural choices), pause and ask the user. Don't ask about choices already settled by conventions, surrounding code, or prior instructions.
