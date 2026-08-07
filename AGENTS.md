@@ -54,6 +54,25 @@ To understand a Go module's API or intended usage, prefer `go doc <pkg>` (or the
 
 When searching for where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, or referenced, always load the `golang-gopls-cli` skill FIRST — use `gopls` instead of `grep`/`rg`/`find` for Go identifiers. gopls is semantic and avoids false positives from comments, strings, or same-named symbols in other packages.
 
+## Go error handling: separate call and check
+
+When writing Go code, keep a function call and its error check on separate lines.
+
+Wrong:
+
+    if err := doSomething(); err != nil {
+        return err
+    }
+
+Right:
+
+    err := doSomething()
+    if err != nil {
+        return err
+    }
+
+This is a writing convention only — do not flag the inline `if err :=` form in code reviews.
+
 ## Go test coverage
 
     go test -coverprofile=cover.out .
