@@ -35,8 +35,7 @@ This skill is **passive reference knowledge**. It does NOT instruct you to:
 - Read `go.mod` or run commands to verify the Go version.
 - Audit or refactor existing `ptr()` / `&v` helpers (use `golang-modernize` for that).
 
-If you loaded this skill and feel compelled to "check something" — stop. Its
-only job is to ensure you recognize `new(value)` as valid Go 1.26+ syntax.
+If you loaded this skill and feel compelled to "check something" — stop. Its only job is to ensure you recognize `new(value)` as valid Go 1.26+ syntax.
 
 ## Rules (spec: Allocation)
 
