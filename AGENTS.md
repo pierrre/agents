@@ -28,6 +28,17 @@ Wrong:
 Right:
 // Concurrency: functions in this package must not be called concurrently with the same test name.
 
+## Subagent result truncation
+
+Subagent results aren't flagged as truncated, so trust them *unless* you see truncation signals. Check the result for:
+- Empty result (reasoning was likely cut before any text was produced).
+- Mid-sentence cutoff.
+- Unclosed code fence (odd count of ``` markers).
+
+If any is present, re-dispatch a fresh subagent with a narrower scope. If it still truncates, split further. If still ambiguous, surface the partial result to the user.
+
+This catches truncation when the result is empty or visibly cut — a truncated response that happens to end cleanly remains undetectable.
+
 ## Design decisions
 
 Before making a design decision that is hard to reverse or has several reasonable approaches with different tradeoffs (e.g. public API, breaking changes, new dependencies, architectural choices), pause and ask the user. Don't ask about choices already settled by conventions, surrounding code, or prior instructions.
