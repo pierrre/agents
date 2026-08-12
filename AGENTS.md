@@ -4,15 +4,21 @@
 
 This applies to any file whose purpose is durable cross-task guidance for AI agents: `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, files under `.opencode/`, and files under `skills/`.
 
-Before editing such a file, confirm the change would help a future agent working on an *unrelated* task. Don't add task-specific notes, transient state, or content already covered elsewhere. Keep these files concise and non-redundant. After drafting, check for ambiguities a cold reader would hit, then compress until further cuts would lose meaning.
+Before editing such a file, confirm the change would help a future agent working on an *unrelated* task.
+Don't add task-specific notes, transient state, or content already covered elsewhere.
+Keep these files concise and non-redundant.
+After drafting, check for ambiguities a cold reader would hit, then compress until further cuts would lose meaning.
 
 ## AGENTS.md is symlinked
 
-This repo's root `AGENTS.md` is the source of truth. `opencode/AGENTS.md` is a symlink to it, and `~/.config/opencode` is itself a symlink to this repo's `opencode/` dir (not committed, lives outside the repo). So `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same file — edit the root `AGENTS.md` only; one edit, one commit.
+This repo's root `AGENTS.md` is the source of truth.
+`opencode/AGENTS.md` is a symlink to it, and `~/.config/opencode` is itself a symlink to this repo's `opencode/` dir (not committed, lives outside the repo).
+So `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same file — edit the root `AGENTS.md` only; one edit, one commit.
 
 ## Honesty
 
-Be honest and pragmatic, not a sycophant. Correct the user when they are wrong, don't praise ideas by default, say "I disagree" when you do, and flag incorrect assumptions before acting on them.
+Be honest and pragmatic, not a sycophant.
+Correct the user when they are wrong, don't praise ideas by default, say "I disagree" when you do, and flag incorrect assumptions before acting on them.
 
 ## Prose line wrapping
 
@@ -30,18 +36,22 @@ Right:
 
 ## Subagent result truncation
 
-Subagent results aren't flagged as truncated, so trust them *unless* you see truncation signals. Check the result for:
+Subagent results aren't flagged as truncated, so trust them *unless* you see truncation signals.
+Check the result for:
 - Empty result (reasoning was likely cut before any text was produced).
 - Mid-sentence cutoff.
 - Unclosed code fence (odd count of ``` markers).
 
-If any is present, re-dispatch a fresh subagent with a narrower scope. If it still truncates, split further. If still ambiguous, surface the partial result to the user.
+If any is present, re-dispatch a fresh subagent with a narrower scope.
+If it still truncates, split further.
+If still ambiguous, surface the partial result to the user.
 
 This catches truncation when the result is empty or visibly cut — a truncated response that happens to end cleanly remains undetectable.
 
 ## Design decisions
 
-Before making a design decision that is hard to reverse or has several reasonable approaches with different tradeoffs (e.g. public API, breaking changes, new dependencies, architectural choices), pause and ask the user. Don't ask about choices already settled by conventions, surrounding code, or prior instructions.
+Before making a design decision that is hard to reverse or has several reasonable approaches with different tradeoffs (e.g. public API, breaking changes, new dependencies, architectural choices), pause and ask the user.
+Don't ask about choices already settled by conventions, surrounding code, or prior instructions.
 
 ## Tests
 
@@ -50,7 +60,10 @@ Before making a design decision that is hard to reverse or has several reasonabl
 
 ## Plan mode
 
-In plan mode, running read-only verification commands is allowed and expected: tests, lint, typecheck, and compile checks that don't emit artifacts. They don't modify the codebase. Cache/temp files they generate (coverage profiles, build caches) are harmless — ignore them. Don't run commands that persist real artifacts (release builds, generated source committed to the repo).
+In plan mode, running read-only verification commands is allowed and expected: tests, lint, typecheck, and compile checks that don't emit artifacts.
+They don't modify the codebase.
+Cache/temp files they generate (coverage profiles, build caches) are harmless — ignore them.
+Don't run commands that persist real artifacts (release builds, generated source committed to the repo).
 
 ## Go code reviews
 
@@ -59,11 +72,13 @@ It is the always-on correctness checklist for panics and data races; load it eve
 
 ## Go documentation lookup
 
-To understand a Go module's API or intended usage, prefer `go doc <pkg>` (or the `golang-pkg-go-dev` skill via `godig`) before reading its source. Drop to source when you need behavior, internals, or unexported details — `go doc` only shows exported symbols and is silent on many examples.
+To understand a Go module's API or intended usage, prefer `go doc <pkg>` (or the `golang-pkg-go-dev` skill via `godig`) before reading its source.
+Drop to source when you need behavior, internals, or unexported details — `go doc` only shows exported symbols and is silent on many examples.
 
 ## Go identifier search
 
-When searching for where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, or referenced, always load the `golang-gopls-cli` skill FIRST — use `gopls` instead of `grep`/`rg`/`find` for Go identifiers. gopls is semantic and avoids false positives from comments, strings, or same-named symbols in other packages.
+When searching for where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, or referenced, always load the `golang-gopls-cli` skill FIRST — use `gopls` instead of `grep`/`rg`/`find` for Go identifiers.
+gopls is semantic and avoids false positives from comments, strings, or same-named symbols in other packages.
 
 ## Go error handling: separate call and check
 
@@ -95,7 +110,8 @@ Profile format (one block per line):
     <file>:<startLine>.<startCol>,<endLine>.<endCol> <stmts> <count>
 
 - `mode: set` (default, 0/1) | `count` (int hits) | `atomic` (race-safe; auto under `-race`).
-- Blocks are statement-ranges, not lines; to check line N, find a block with `startLine ≤ N ≤ endLine` and read its count. Non-executable lines don't appear.
+- Blocks are statement-ranges, not lines; to check line N, find a block with `startLine ≤ N ≤ endLine` and read its count.
+  Non-executable lines don't appear.
 - `-coverpkg=./...` instruments cross-package; `-coverprofile`/`-coverpkg` imply `-cover`.
 - Source rewriting makes `-cover` compile errors show shifted line numbers.
 - Parse the `.out` directly (e.g. `grep ' 0$'` finds uncovered blocks).
@@ -107,4 +123,6 @@ Profile format (one block per line):
 
 ## CPU-intensive commands
 
-ALWAYS prefix CPU-intensive commands (compilation, builds, tests, linting) with `nice -n 19` — no exceptions; when unsure whether a command is CPU-intensive, apply it anyway. Only quick read-only commands may omit it. This keeps the machine responsive for interactive work.
+ALWAYS prefix CPU-intensive commands (compilation, builds, tests, linting) with `nice -n 19` — no exceptions; when unsure whether a command is CPU-intensive, apply it anyway.
+Only quick read-only commands may omit it.
+This keeps the machine responsive for interactive work.
