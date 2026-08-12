@@ -44,7 +44,8 @@
       "name": "Scaleway",
       "options": {
         "baseURL": "https://api.scaleway.ai/09d301e8-0c74-42b0-8e72-124c5d50f09b/v1",
-        "apiKey": "{env:SCW_SECRET_KEY_PRODUCTION}"
+        "apiKey": "{env:SCW_SECRET_KEY_PRODUCTION}",
+        "setCacheKey": true
       },
       "models": {
         "glm-5.2": {
