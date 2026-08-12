@@ -72,7 +72,8 @@
           },
           "cost": {
             "input": 0.40,
-            "output": 0.80
+            "output": 0.80,
+            "cache_read": 0.08
           },
           "variants": {
             "none": { "reasoningEffort": "none" },
