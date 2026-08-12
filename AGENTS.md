@@ -16,10 +16,10 @@ Be honest and pragmatic, not a sycophant. Correct the user when they are wrong, 
 
 ## Prose line wrapping
 
-When writing prose — markdown, commit messages, docs, code comments — keep each sentence on a single line.
-Don't hard-wrap mid-sentence to satisfy a width limit or for perceived readability.
+ALWAYS write prose one sentence per line: markdown, commit messages, docs, and code comments.
+Never hard-wrap mid-sentence to satisfy a width limit or for perceived readability.
 Start a new line only at sentence or paragraph boundaries.
-This overrides narrower wrapping conventions (e.g. Go/godoc comment style, ~80-column limits), which do not apply to prose.
+This has no exceptions and overrides narrower wrapping conventions (e.g. Go/godoc comment style, ~80-column limits).
 
 Wrong:
 // Concurrency: functions in this package must not be called concurrently with
