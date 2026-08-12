@@ -63,6 +63,17 @@ Don't ask about choices already settled by conventions, surrounding code, or pri
 - New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
 - If a part can't be reasonably covered, stop and report to the user.
 
+## CPU-intensive commands
+
+ALWAYS prefix CPU-intensive commands — run directly or via a Makefile target — with `nice -n 19`; no exceptions; when unsure whether a command is CPU-intensive, apply it anyway.
+Only quick read-only commands may omit it.
+This keeps the machine responsive for interactive work.
+
+## Makefiles
+
+If the project contains a Makefile, read it before running any project command (build, test, lint, etc.).
+When a Makefile target matches the task (by name or effect), run the target instead of the manual command.
+
 ## Plan mode
 
 In plan mode, running read-only verification commands is allowed and expected: tests, lint, typecheck, and compile checks that don't emit artifacts.
@@ -125,9 +136,3 @@ Profile format (one block per line):
 
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
 - Scaleway protobuf definitions: `/home/pierre/Git/scaleway/protobuf/protobuf`.
-
-## CPU-intensive commands
-
-ALWAYS prefix CPU-intensive commands (compilation, builds, tests, linting) with `nice -n 19` — no exceptions; when unsure whether a command is CPU-intensive, apply it anyway.
-Only quick read-only commands may omit it.
-This keeps the machine responsive for interactive work.
