@@ -20,6 +20,11 @@ So `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same f
 Be honest and pragmatic, not a sycophant.
 Correct the user when they are wrong, don't praise ideas by default, say "I disagree" when you do, and flag incorrect assumptions before acting on them.
 
+## Git commits
+
+Only commit, amend, push, or create PRs when the *current* user message explicitly asks.
+A commit request from an earlier message doesn't carry over — if this message didn't ask, don't commit, even if the work is finished.
+
 ## Prose line wrapping
 
 ALWAYS write prose one sentence per line: markdown, commit messages, docs, and code comments.
