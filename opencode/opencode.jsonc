@@ -6,7 +6,8 @@
       "name": "Codix Iliad",
       "options": {
         "baseURL": "https://iliad.codix.scw.eu/v1",
-        "apiKey": "{env:CODIX_TOKEN}"
+        "apiKey": "{env:CODIX_TOKEN}",
+        "setCacheKey": true
       },
       "models": {
         "codiX-agent": {
