@@ -31,6 +31,9 @@ ALWAYS write prose one sentence per line: markdown, commit messages, docs, and c
 Never hard-wrap mid-sentence to satisfy a width limit or for perceived readability.
 Start a new line only at sentence or paragraph boundaries.
 This has no exceptions and overrides narrower wrapping conventions (e.g. Go/godoc comment style, ~80-column limits).
+Wrapping near a width is a trained default — override it every time; write one long line per sentence and never break for a column limit.
+Before committing prose, re-read your own diff and reflow any hard-wrapped line you spot.
+Enforce this on your own output too: never offer the user a pre-wrapped draft.
 
 Wrong:
 // Concurrency: functions in this package must not be called concurrently with
