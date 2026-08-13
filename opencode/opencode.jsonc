@@ -36,6 +36,24 @@
             "high": { "reasoningEffort": "high" },
             "max":  { "reasoningEffort": "max" }
           }
+        },
+        "Deepseek/deepseek-v4-flash-0731": {
+          "name": "deepseek-v4-flash-0731",
+          "limit": {
+            "context": 256000,
+            "output": 32768
+          },
+          "cost": {
+            "input": 0.40,
+            "output": 0.80,
+            "cache_read": 0.08
+          },
+          "variants": {
+            "none": { "reasoningEffort": "none" },
+            "low":  { "reasoningEffort": "low" },
+            "high": { "reasoningEffort": "high" },
+            "max":  { "reasoningEffort": "max" }
+          }
         }
       }
     },
