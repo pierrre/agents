@@ -112,6 +112,7 @@
     "Codix-Iliad",
     "Scaleway"
   ],
+  "snapshot": false,
   "compaction": {
     "auto": true,
     "prune": false,
