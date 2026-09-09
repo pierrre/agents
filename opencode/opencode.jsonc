@@ -20,7 +20,6 @@
             "input": 0.60,
             "output": 3.60
           },
-          "temperature": true,
         },
         "Zai/GLM-5.2": {
           "name": "glm-5.2",
@@ -32,7 +31,6 @@
             "input": 1.80,
             "output": 5.50
           },
-          "temperature": true,
           "variants": {
             "none": { "reasoningEffort": "none" },
             "low":  { "reasoningEffort": "low" },
@@ -51,7 +49,6 @@
             "output": 0.80,
             "cache_read": 0.08
           },
-          "temperature": true,
           "variants": {
             "none": { "reasoningEffort": "none" },
             "low":  { "reasoningEffort": "low" },
@@ -80,7 +77,6 @@
             "input": 1.80,
             "output": 5.50
           },
-          "temperature": true,
           "variants": {
             "none": { "reasoningEffort": "none" },
             "low":  { "reasoningEffort": "low" },
@@ -99,7 +95,6 @@
             "output": 0.80,
             "cache_read": 0.08
           },
-          "temperature": true,
           "variants": {
             "none": { "reasoningEffort": "none" },
             "low":  { "reasoningEffort": "low" },
@@ -109,15 +104,6 @@
         }
       }
     }
-  },
-  "agent": {
-    "plan":       { "temperature": 0 },
-    "build":      { "temperature": 0 },
-    "general":    { "temperature": 0 },
-    "explore":    { "temperature": 0 },
-    "title":      { "temperature": 0 },
-    "summary":    { "temperature": 0 },
-    "compaction": { "temperature": 0 }
   },
   "default_agent": "plan",
   "subagent_depth": 10,
