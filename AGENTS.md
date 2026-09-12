@@ -68,9 +68,10 @@ Don't ask about choices already settled by conventions, surrounding code, or pri
 
 ## CPU-intensive commands
 
-ALWAYS prefix CPU-intensive commands — run directly or via a Makefile target — with `nice -n 19`; no exceptions; when unsure whether a command is CPU-intensive, apply it anyway.
+ALWAYS prefix CPU-intensive commands — run directly or via a Makefile target — with `nice -n 19`; when unsure whether a command is CPU-intensive, apply it anyway.
 Only quick read-only commands may omit it.
 This keeps the machine responsive for interactive work.
+Do not use `nice` for benchmarks: the lowered scheduling priority distorts timing measurements.
 
 ## Makefiles
 
