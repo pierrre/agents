@@ -1,13 +1,12 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {
+  "providers": {
     "Codix-Iliad": {
-      "npm": "@ai-sdk/openai-compatible",
+      "package": "@opencode/ai/providers/openai-compatible",
       "name": "Codix Iliad",
-      "options": {
+      "settings": {
         "baseURL": "https://iliad.codix.scw.eu/v1",
-        "apiKey": "{env:CODIX_TOKEN}",
-        "setCacheKey": true
+        "apiKey": "{env:CODIX_TOKEN}"
       },
       "models": {
         "codiX-agent": {
@@ -19,7 +18,7 @@
           "cost": {
             "input": 0.60,
             "output": 3.60
-          },
+          }
         },
         "Zai/GLM-5.2": {
           "name": "glm-5.2",
@@ -31,12 +30,12 @@
             "input": 1.80,
             "output": 5.50
           },
-          "variants": {
-            "none": { "reasoningEffort": "none" },
-            "low":  { "reasoningEffort": "low" },
-            "high": { "reasoningEffort": "high" },
-            "max":  { "reasoningEffort": "max" }
-          }
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } },
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         },
         "Deepseek/deepseek-v4-flash-0731": {
           "name": "deepseek-v4-flash-0731",
@@ -47,24 +46,25 @@
           "cost": {
             "input": 0.40,
             "output": 0.80,
-            "cache_read": 0.08
+            "cache": {
+              "read": 0.08
+            }
           },
-          "variants": {
-            "none": { "reasoningEffort": "none" },
-            "low":  { "reasoningEffort": "low" },
-            "high": { "reasoningEffort": "high" },
-            "max":  { "reasoningEffort": "max" }
-          }
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } },
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         }
       }
     },
     "Scaleway": {
-      "npm": "@ai-sdk/openai-compatible",
+      "package": "@opencode/ai/providers/openai-compatible",
       "name": "Scaleway",
-      "options": {
+      "settings": {
         "baseURL": "https://api.scaleway.ai/09d301e8-0c74-42b0-8e72-124c5d50f09b/v1",
-        "apiKey": "{env:SCW_SECRET_KEY_PRODUCTION}",
-        "setCacheKey": true
+        "apiKey": "{env:SCW_SECRET_KEY_PRODUCTION}"
       },
       "models": {
         "glm-5.2": {
@@ -77,12 +77,12 @@
             "input": 1.80,
             "output": 5.50
           },
-          "variants": {
-            "none": { "reasoningEffort": "none" },
-            "low":  { "reasoningEffort": "low" },
-            "high": { "reasoningEffort": "high" },
-            "max":  { "reasoningEffort": "max" }
-          }
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } },
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         },
         "deepseek-v4-flash-0731": {
           "name": "deepseek-v4-flash-0731",
@@ -93,50 +93,42 @@
           "cost": {
             "input": 0.40,
             "output": 0.80,
-            "cache_read": 0.08
+            "cache": {
+              "read": 0.08
+            }
           },
-          "variants": {
-            "none": { "reasoningEffort": "none" },
-            "low":  { "reasoningEffort": "low" },
-            "high": { "reasoningEffort": "high" },
-            "max":  { "reasoningEffort": "max" }
-          }
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } },
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
         }
       }
     }
   },
   "default_agent": "plan",
-  "subagent_depth": 10,
-  //"model": "Codix-Iliad/codiX-agent",
+  "experimental": {
+    "subagent_depth": 10
+  },
   "enabled_providers": [
     "Codix-Iliad",
     "Scaleway"
   ],
-  "snapshot": false,
+  "snapshots": false,
   "compaction": {
     "auto": true,
-    "prune": false,
-    "reserved": 10000
+    "buffer": 10000
   },
-  "permission": {
-    "external_directory": {
-      "*": "ask",
-      "/tmp/**": "allow",
-      "~/.agents/**": "allow",
-      "~/.config/opencode/**": "allow",
-      "~/Git/**": "allow",
-      "/usr/lib/go/**": "allow",
-      "~/go/pkg/mod/**": "allow"
-    },
-  },
-  "lsp": {
-    "gopls": {
-      "command": [
-        "gopls",
-        "-remote=auto",
-      ]
-    }
-  },
+  "permissions": [
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "external_directory", "resource": "/tmp/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/.agents/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/.config/opencode/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/Git/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "/usr/lib/go/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/go/pkg/mod/*", "effect": "allow" }
+  ],
   "formatter": {
     "gofmt": { "disabled": true },
     "goimports": {
