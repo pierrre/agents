@@ -125,6 +125,7 @@
     { "action": "external_directory", "resource": "/tmp/*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/.agents/*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/.config/opencode/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/.local/share/opencode/*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/Git/*", "effect": "allow" },
     { "action": "external_directory", "resource": "/usr/lib/go/*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/go/pkg/mod/*", "effect": "allow" }
