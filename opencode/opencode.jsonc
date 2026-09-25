@@ -103,6 +103,26 @@
             { "id": "high", "settings": { "reasoningEffort": "high" } },
             { "id": "max", "settings": { "reasoningEffort": "max" } }
           ]
+        },
+        "qwen3.8-27b": {
+          "name": "qwen3.8-27b",
+          "limit": {
+            "context": 256000,
+            "output": 32768
+          },
+          "cost": {
+            "input": 0.60,
+            "output": 3.30,
+            "cache": {
+              "read": 0.12
+            }
+          },
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
+            { "id": "xhigh", "settings": { "reasoningEffort": "xhigh" } }
+          ]
         }
       }
     }
