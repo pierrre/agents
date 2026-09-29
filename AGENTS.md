@@ -66,12 +66,13 @@ Don't ask about choices already settled by conventions, surrounding code, or pri
 - New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
 - If a part can't be reasonably covered, stop and report to the user.
 
-## CPU-intensive commands
+## Heavy commands
 
-ALWAYS prefix CPU-intensive commands — run directly or via a Makefile target — with `nice -n 19`; when unsure whether a command is CPU-intensive, apply it anyway.
-Only quick read-only commands may omit it.
-This keeps the machine responsive for interactive work.
+ALWAYS run CPU- or memory-intensive commands — run directly or via a Makefile target — as `nice -n 19 choom -n 1000 -- <command>`; when unsure whether a command is heavy, apply it anyway.
+Only quick read-only commands may omit this.
+`nice` keeps the machine responsive for interactive work; `choom -n 1000` makes the command and its process tree the first victims of the OOM killer so interactive workloads survive memory pressure.
 Do not use `nice` for benchmarks: the lowered scheduling priority distorts timing measurements.
+`choom` is safe for benchmarks: the OOM score only matters if the kernel actually kills something.
 
 ## Makefiles
 
