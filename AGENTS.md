@@ -25,6 +25,12 @@ Correct the user when they are wrong, don't praise ideas by default, say "I disa
 Only commit, amend, push, or create PRs when the *current* user message explicitly asks.
 A commit request from an earlier message doesn't carry over — if this message didn't ask, don't commit, even if the work is finished.
 
+## glab (GitLab MRs)
+
+glab prompts hard-fail in non-TTY sessions, so always use non-interactive flags.
+`-f` is `--fill` (title/description from commits), NOT force — and `--fill` conflicts with explicit `--title`/`--description`.
+Non-interactive MR creation: `glab mr create --fill --target-branch <branch> -y`.
+
 ## Prose line wrapping
 
 ALWAYS write prose one sentence per line: markdown, commit messages, docs, and code comments.
