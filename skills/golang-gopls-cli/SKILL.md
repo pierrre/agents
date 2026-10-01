@@ -37,6 +37,14 @@ You usually start with a name, not a position. Two steps:
 1. `gopls -remote=auto workspace_symbol -matcher fuzzy Do` → returns the symbol's `file:line:col`
 2. Feed that position to `references`, `definition`, `call_hierarchy`, etc.
 
+**`workspace_symbol` finds declarations by name, not usages** — its output is a list of where name-matching symbols are *declared*, never a usage list.
+
+**Shared names (fields above all).** A bare name like `Name`/`ID` is declared on many types, so a name search returns unrelated declarations. To find usages of *one specific* identifier, pin its exact position first, then query that position — never query the name:
+- Have an existing use of `MyStruct.Field`? `gopls -remote=auto references <file>:<line>:<col of Field>` on it. Done.
+- Only have the struct's file? `gopls -remote=auto symbols <file>` to get that field's `file:line:col`, then `references` it.
+
+The position you give `references` must be the exact symbol you mean; a fuzzy match on a shared name references the wrong thing.
+
 ## Command reference
 
 | Task | Command | Example |
