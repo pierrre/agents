@@ -128,6 +128,13 @@
     }
   },
   "default_agent": "plan",
+  "agents": {
+    "plan": {
+      "permissions": [
+        { "action": "edit", "resource": "/tmp/*", "effect": "allow" }
+      ]
+    }
+  },
   "experimental": {
     "subagent_depth": 10
   },
