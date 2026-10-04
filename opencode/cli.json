@@ -21,7 +21,8 @@
     "sidebar": "auto",
     "scrollbar": true,
     "thinking": "show",
-    "markdown": "rendered"
+    "markdown": "rendered",
+    "verbosity": "high"
   },
   "animations": true
 }
