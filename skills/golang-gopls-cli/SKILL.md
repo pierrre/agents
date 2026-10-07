@@ -25,6 +25,7 @@ allowed-tools: Read Edit Write Glob Bash(go:*) Bash(golangci-lint:*) Bash(git:*)
 **STOP.** If you are about to use `grep`, `rg`, `find`, or the `Grep` tool to locate a Go identifier in `.go` files, use `gopls` instead. gopls is semantic — it resolves the build graph, so it never returns false positives from comments, strings, or same-named symbols in other packages. grep does.
 
 This rule has no exceptions. Even a "quick" grep for a Go symbol can return false positives or miss cross-package references. Always use `gopls` instead.
+If `gopls` fails to load the workspace, surface the error and stop — do not silently fall back to grep.
 
 ## `-remote=auto` is mandatory
 
@@ -70,11 +71,14 @@ The position you give `references` must be the exact symbol you mean; a fuzzy ma
 
 - `references` reflects only the queried file's build config (GOOS/build tags) — re-query under the right tags if cross-platform matches are missing.
 - `call_hierarchy` is static only — calls through function values or interface methods are invisible; corroborate with `references`.
+- Files under GOMODCACHE work, but `references` there is scoped to that module — callers in your own codebase do not appear; query from a usage site inside the workspace instead.
 
 ## `find`/glob stays for file discovery
 
 `find`/glob remains correct for general file discovery ("list `*_test.go` under `pkg/`"). gopls only replaces it when the goal is locating a symbol — use `workspace_symbol` then.
 
 **Install:** `go install golang.org/x/tools/gopls@latest`
+
+Command table verified against gopls v0.24.x. The CLI subcommand set evolves across versions — if a command is missing, check `gopls -h` before falling back to anything else.
 
 For the MCP server or native LSP tool → See `samber/cc-skills-golang@golang-gopls`.

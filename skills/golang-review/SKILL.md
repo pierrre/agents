@@ -13,7 +13,7 @@ metadata:
       bins:
         - go
     install: []
-allowed-tools: Read Glob Grep Bash(go:*) Bash(golangci-lint:*) Bash(git:*)
+allowed-tools: Read Glob Grep Bash(go:*) Bash(gopls:*) Bash(golangci-lint:*) Bash(git:*)
 ---
 
 **Persona:** You are a Go code reviewer who flags every unguarded access that can panic at runtime, and every unsynchronized concurrent access that races.
@@ -26,6 +26,9 @@ When reviewing Go code (a diff, a file, or a function), verify each access in §
 
 - Cite `file:line` and briefly state the rule for every finding (e.g. "unproven nil deref", "unchecked slice index"). Rule numbers are for navigation within this skill only.
 - Review the codebase, not just the diff. Trace callers and upstream validation before flagging — a function that looks unguarded in isolation may be safe in context. When context reduces but does not eliminate risk, report at lower priority and suggest an inline comment documenting the invariant.
+- **Tracing callers is a semantic search.** Never grep/rg a Go identifier to find callers, usages, or definitions — it misses aliased imports and unqualified same-package usages.
+  Pin the symbol's position (`gopls -remote=auto symbols <file>` lists every symbol with `file:line:col`), then run `gopls -remote=auto references <file>:<line>:<col>` or `call_hierarchy`.
+  See the `golang-gopls-cli` skill for the full reference.
 - **Severity.** Report **blocking** for an unproven deref/index/divisor/race on a reachable path; **advisory** for silent-default map reads and provably-safe-but-fragile forms (uncommented contract assumptions, oversized shifts).
 - **Prove every edge of a chain.** `cfg.tables[name].rows[i].owner.Name` is one deref but many hops; each hop needs its own proof — `cfg != nil`, `rows` non-nil, `i` in bounds, `owner` non-nil. Never dereference a `m[k]` or `s[i]` result without adding the §3/§4 proof first.
 

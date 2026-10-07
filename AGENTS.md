@@ -104,8 +104,16 @@ Drop to source when you need behavior, internals, or unexported details — `go 
 
 ## Go identifier search
 
-When searching for where a Go identifier (function, type, method, variable, constant, field, interface) is used, called, defined, or referenced, always load the `golang-gopls-cli` skill FIRST — use `gopls` instead of `grep`/`rg`/`find` for Go identifiers.
-gopls is semantic and avoids false positives from comments, strings, or same-named symbols in other packages.
+Never use `grep`, `rg`, `find`, or the Grep tool to locate Go identifiers — not for finding callers, usages, references, definitions, implementations, or types, and not for preparing renames.
+They miss aliased imports and unqualified same-package usages, and they match comments and strings.
+Run the gopls CLI instead (the `golang-gopls-cli` skill has the full command reference):
+
+    gopls -remote=auto workspace_symbol -matcher fuzzy <name>  # name → file:line:col
+    gopls -remote=auto references <file>:<line>:<col>          # all usages, callers
+    gopls -remote=auto call_hierarchy <file>:<line>:<col>      # callers + callees
+
+Caveats: `references` reflects only the queried file's build config (GOOS/tags), and `call_hierarchy` is static-only — calls through function values or interface methods need `references` to corroborate.
+Grep stays correct for non-code text: string literals, error and log messages, comments, non-Go files, and file discovery by name.
 
 ## Go error handling: separate call and check
 
