@@ -4,3 +4,6 @@
 [submodule "skills/stop-slop"]
 	path = skills/stop-slop
 	url = https://github.com/hardikpandya/stop-slop.git
+[submodule "skills/ponytail"]
+	path = skills/ponytail
+	url = ../../DietrichGebert/ponytail.git
