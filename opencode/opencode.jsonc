@@ -133,6 +133,7 @@
       "permissions": [
         { "action": "external_directory", "resource": "/tmp/*", "effect": "allow" },
         { "action": "external_directory", "resource": "~/.opencode/*", "effect": "allow" },
+        { "action": "edit", "resource": "/tmp/*", "effect": "allow" }
       ]
     }
   },
