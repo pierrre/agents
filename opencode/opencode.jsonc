@@ -84,8 +84,45 @@
             { "id": "max", "settings": { "reasoningEffort": "max" } }
           ]
         },
+        "glm-5.3": {
+          "name": "glm-5.3",
+          "limit": {
+            "context": 256000,
+            "output": 16384
+          },
+          "cost": {
+            "input": 1.80,
+            "output": 5.50
+          },
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } },
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
+        },
         "deepseek-v4-flash-0731": {
           "name": "deepseek-v4-flash-0731",
+          "limit": {
+            "context": 256000,
+            "output": 32768
+          },
+          "cost": {
+            "input": 0.40,
+            "output": 0.80,
+            "cache": {
+              "read": 0.08
+            }
+          },
+          "variants": [
+            { "id": "none", "settings": { "reasoningEffort": "none" } },
+            { "id": "low", "settings": { "reasoningEffort": "low" } },
+            { "id": "high", "settings": { "reasoningEffort": "high" } },
+            { "id": "max", "settings": { "reasoningEffort": "max" } }
+          ]
+        },
+        "deepseek-v4.1-flash": { // tmp
+          "name": "deepseek-v4.1-flash",
           "limit": {
             "context": 256000,
             "output": 32768
