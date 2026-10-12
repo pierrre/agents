@@ -99,7 +99,7 @@ It is the always-on correctness checklist for panics and data races; load it eve
 
 ## Go documentation lookup
 
-To understand a Go module's API or intended usage, prefer `go doc <pkg>` (or the `golang-pkg-go-dev` skill via `godig`) before reading its source.
+To understand a Go module's API or intended usage, prefer `go doc <pkg>` before reading its source.
 Drop to source when you need behavior, internals, or unexported details — `go doc` only shows exported symbols and is silent on many examples.
 
 ## Go identifier search
