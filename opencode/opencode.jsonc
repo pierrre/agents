@@ -196,7 +196,7 @@
           "JIRA_PERSONAL_TOKEN": "{env:JIRA_PAT}",
           "CONFLUENCE_URL": "{env:CONFLUENCE_URL}",
           "CONFLUENCE_PERSONAL_TOKEN": "{env:CONFLUENCE_PAT}",
-          "TOOLSETS": "default"
+          "TOOLSETS": "all"
         }
       }
     }
