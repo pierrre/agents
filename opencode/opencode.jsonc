@@ -186,6 +186,21 @@
     "auto": true,
     "buffer": 10000
   },
+  "mcp": {
+    "servers": {
+      "atlassian": {
+        "type": "local",
+        "command": ["uvx", "mcp-atlassian"],
+        "environment": {
+          "JIRA_URL": "{env:JIRA_URL}",
+          "JIRA_PERSONAL_TOKEN": "{env:JIRA_PAT}",
+          "CONFLUENCE_URL": "{env:CONFLUENCE_URL}",
+          "CONFLUENCE_PERSONAL_TOKEN": "{env:CONFLUENCE_PAT}",
+          "TOOLSETS": "default"
+        }
+      }
+    }
+  },
   "permissions": [
     { "action": "external_directory", "resource": "*", "effect": "ask" },
     { "action": "external_directory", "resource": "/tmp/*", "effect": "allow" },
