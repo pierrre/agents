@@ -198,6 +198,13 @@
           "CONFLUENCE_PERSONAL_TOKEN": "{env:CONFLUENCE_PAT}",
           "TOOLSETS": "all"
         }
+      },
+      "gitlab": {
+        "type": "remote",
+        "url": "{env:GITLAB_MCP_URL}",
+        "headers": {
+          "X-Gitlab-Enabled-Mcp-Server-Toolsets": "all"
+        }
       }
     }
   },
