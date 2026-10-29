@@ -24,5 +24,8 @@
     "markdown": "rendered",
     "verbosity": "high"
   },
-  "animations": true
+  "animations": true,
+  "scroll": {
+    "acceleration": true
+  }
 }
