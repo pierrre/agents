@@ -31,6 +31,12 @@ glab prompts hard-fail in non-TTY sessions, so always use non-interactive flags.
 `-f` is `--fill` (title/description from commits), NOT force — and `--fill` conflicts with explicit `--title`/`--description`.
 Non-interactive MR creation: `glab mr create --fill --target-branch <branch> -y`.
 
+## Prose for humans
+
+Any text a human will read (replies, reports, commit messages, PR/MR descriptions, docs, code comments) is written for a reader who already wades through AI slop all day.
+Say the thing in the fewest words that carry it, then stop: no filler, no restating the question, no recapping the answer, no bold, bullets, or headings where a plain sentence works, plain words over impressive ones.
+Before writing or editing such text, load the `stop-slop` skill and apply it.
+
 ## Prose line wrapping
 
 ALWAYS write prose one sentence per line: markdown, commit messages, docs, and code comments.
