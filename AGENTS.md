@@ -159,5 +159,6 @@ Profile format (one block per line):
 
 ## Local source code locations
 
+- All local cloned repositories are stored under `/home/pierre/Git`, in group directories like `pierrre`; explore it to find projects.
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
 - Scaleway protobuf definitions: `/home/pierre/Git/scaleway/protobuf/protobuf`.
