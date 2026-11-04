@@ -25,11 +25,23 @@ Correct the user when they are wrong, don't praise ideas by default, say "I disa
 Only commit, amend, push, or create PRs when the *current* user message explicitly asks.
 A commit request from an earlier message doesn't carry over — if this message didn't ask, don't commit, even if the work is finished.
 
+## Git feature branches
+
+A feature branch holds a single commit.
+When a change is requested, amend that commit instead of adding a new one, then force push with lease (`git push --force-with-lease`).
+If the branch somehow has several commits, squash them into one first.
+Update the commit message and the PR/MR description if the change makes them inaccurate.
+
 ## glab (GitLab MRs)
 
 glab prompts hard-fail in non-TTY sessions, so always use non-interactive flags.
 `-f` is `--fill` (title/description from commits), NOT force — and `--fill` conflicts with explicit `--title`/`--description`.
 Non-interactive MR creation: `glab mr create --fill --target-branch <branch> -y`.
+
+## Open PR/MR in the browser
+
+After creating a PR/MR, open its page in the browser (e.g. `xdg-open <url>` on Linux).
+Best effort: if it fails or takes more than one attempt, drop it.
 
 ## Prose for humans
 
