@@ -1,6 +1,6 @@
 # Global rules
 
-## Editing agent instruction files
+## This file
 
 This applies to any file whose purpose is durable cross-task guidance for AI agents: `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, files under `.opencode/`, and files under `skills/`.
 
@@ -9,51 +9,28 @@ Don't add task-specific notes, transient state, or content already covered elsew
 Keep these files concise and non-redundant.
 After drafting, check for ambiguities a cold reader would hit, then compress until further cuts would lose meaning.
 
-## AGENTS.md is symlinked
-
 This repo's root `AGENTS.md` is the source of truth.
-`opencode/AGENTS.md` is a symlink to it, and `~/.config/opencode` is itself a symlink to this repo's `opencode/` dir (not committed, lives outside the repo).
-So `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same file — edit the root `AGENTS.md` only; one edit, one commit.
+`opencode/AGENTS.md` is a symlink to it, and `~/.config/opencode` is a symlink to this repo's `opencode/` dir, so `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same file.
+`make config` creates the `~/.config/opencode` symlink, plus `~/.agents` pointing to this repo; those symlinks live outside the repo.
+Edit the root `AGENTS.md` only; one edit, one commit.
 
-## Honesty
+## Communication
+
+### Honesty
 
 Be honest and pragmatic, not a sycophant.
 Correct the user when they are wrong, don't praise ideas by default, say "I disagree" when you do, and flag incorrect assumptions before acting on them.
 
-## Git commits
-
-Only commit, amend, push, or create PRs when the *current* user message explicitly asks.
-A commit request from an earlier message doesn't carry over — if this message didn't ask, don't commit, even if the work is finished.
-
-## Git feature branches
-
-A feature branch holds a single commit.
-When a change is requested, amend that commit instead of adding a new one, then force push with lease (`git push --force-with-lease`).
-If the branch somehow has several commits, squash them into one first.
-Update the commit message and the PR/MR description if the change makes them inaccurate.
-
-## glab (GitLab MRs)
-
-glab prompts hard-fail in non-TTY sessions, so always use non-interactive flags.
-`-f` is `--fill` (title/description from commits), NOT force — and `--fill` conflicts with explicit `--title`/`--description`.
-Non-interactive MR creation: `glab mr create --fill --target-branch <branch> -y`.
-
-## Open PR/MR in the browser
-
-After creating a PR/MR, open its page in the browser (e.g. `xdg-open <url>` on Linux).
-Best effort: if it fails or takes more than one attempt, drop it.
-
-## Prose for humans
+### Prose for humans
 
 Any text a human will read (replies, reports, commit messages, PR/MR descriptions, docs, code comments) is written for a reader who already wades through AI slop all day.
 Say the thing in the fewest words that carry it, then stop: no filler, no restating the question, no recapping the answer, no bold, bullets, or headings where a plain sentence works, plain words over impressive ones.
 Before writing or editing such text, load the `stop-slop` skill and apply it.
 
-## Prose line wrapping
+### Prose line wrapping
 
 ALWAYS write prose one sentence per line: markdown, commit messages, docs, and code comments.
-Never hard-wrap mid-sentence to satisfy a width limit or for perceived readability.
-Start a new line only at sentence or paragraph boundaries.
+Never hard-wrap mid-sentence to satisfy a width limit or for perceived readability; start a new line only at sentence or paragraph boundaries.
 This has no exceptions and overrides narrower wrapping conventions (e.g. Go/godoc comment style, ~80-column limits).
 Wrapping near a width is a trained default — override it every time; write one long line per sentence and never break for a column limit.
 Before committing prose, re-read your own diff and reflow any hard-wrapped line you spot.
@@ -66,61 +43,84 @@ Wrong:
 Right:
 // Concurrency: functions in this package must not be called concurrently with the same test name.
 
-## Subagent result truncation
+## Git
 
-Subagent results aren't flagged as truncated, so trust them *unless* you see truncation signals.
-Check the result for:
+### Commits
+
+Only commit, amend, push, or create PRs when the *current* user message explicitly asks.
+A commit request from an earlier message doesn't carry over — if this message didn't ask, don't commit, even if the work is finished.
+
+### Feature branches
+
+A feature branch holds a single commit.
+When a change is requested, amend that commit instead of adding a new one, then force push with lease (`git push --force-with-lease`).
+If the branch somehow has several commits, squash them into one first.
+Update the commit message and the PR/MR description if the change makes them inaccurate.
+
+### glab (GitLab MRs)
+
+glab prompts hard-fail in non-TTY sessions, so always use non-interactive flags.
+`-f` is `--fill` (title/description from commits), NOT force — and `--fill` conflicts with explicit `--title`/`--description`.
+Non-interactive MR creation: `glab mr create --fill --target-branch <branch> -y`.
+
+### Open PR/MR in the browser
+
+After creating a PR/MR, open its page in the browser (e.g. `xdg-open <url>` on Linux).
+Best effort: if it fails or takes more than one attempt, drop it.
+
+## How to work
+
+### Subagent result truncation
+
+Subagent results aren't flagged as truncated, so trust them *unless* you see truncation signals:
 - Empty result (reasoning was likely cut before any text was produced).
 - Mid-sentence cutoff.
 - Unclosed code fence (odd count of ``` markers).
 
-If any is present, re-dispatch a fresh subagent with a narrower scope.
-If it still truncates, split further.
-If still ambiguous, surface the partial result to the user.
+If any is present, re-dispatch a fresh subagent with a narrower scope; if it still truncates, split further; if still ambiguous, surface the partial result to the user.
+This catches truncation when the result is empty or visibly cut; a truncated response that happens to end cleanly remains undetectable.
 
-This catches truncation when the result is empty or visibly cut — a truncated response that happens to end cleanly remains undetectable.
-
-## Design decisions
+### Design decisions
 
 Before making a design decision that is hard to reverse or has several reasonable approaches with different tradeoffs (e.g. public API, breaking changes, new dependencies, architectural choices), pause and ask the user.
 Don't ask about choices already settled by conventions, surrounding code, or prior instructions.
 
-## Tests
+### Tests
 
 - New code must be tested; modified code must keep existing tests green and cover new/fixed behavior.
 - If a part can't be reasonably covered, stop and report to the user.
 
-## Heavy commands
+### Plan mode
 
-ALWAYS run CPU- or memory-intensive commands — run directly or via a Makefile target — as `nice -n 19 choom -n 1000 -- <command>`; when unsure whether a command is heavy, apply it anyway.
+In plan mode, running read-only verification commands is allowed and expected: tests, lint, typecheck, and compile checks that don't emit artifacts.
+They don't modify the codebase; cache/temp files they generate (coverage profiles, build caches) are harmless.
+Don't run commands that persist real artifacts (release builds, generated source committed to the repo).
+
+### Heavy commands
+
+ALWAYS run CPU- or memory-intensive commands, directly or via a Makefile target, as `nice -n 19 choom -n 1000 -- <command>`; when unsure whether a command is heavy, apply it anyway.
 Only quick read-only commands may omit this.
 `nice` keeps the machine responsive for interactive work; `choom -n 1000` makes the command and its process tree the first victims of the OOM killer so interactive workloads survive memory pressure.
-Do not use `nice` for benchmarks: the lowered scheduling priority distorts timing measurements.
-`choom` is safe for benchmarks: the OOM score only matters if the kernel actually kills something.
+For benchmarks, drop `nice` (it distorts timing measurements) but keep `choom` (the OOM score only matters if the kernel actually kills something).
 
-## Makefiles
+### Makefiles
 
 If the project contains a Makefile, read it before running any project command (build, test, lint, etc.).
 When a Makefile target matches the task (by name or effect), run the target instead of the manual command.
 
-## Plan mode
+## Go
 
-In plan mode, running read-only verification commands is allowed and expected: tests, lint, typecheck, and compile checks that don't emit artifacts.
-They don't modify the codebase.
-Cache/temp files they generate (coverage profiles, build caches) are harmless — ignore them.
-Don't run commands that persist real artifacts (release builds, generated source committed to the repo).
-
-## Go code reviews
+### Code reviews
 
 When reviewing, checking, auditing, or examining Go code (`.go` files, Go diffs, Go functions, or Go PRs), always load the `golang-review` skill FIRST, before producing any review feedback.
 It is the always-on correctness checklist for panics and data races; load it even when the review also covers style, performance, or design.
 
-## Go documentation lookup
+### Documentation lookup
 
 To understand a Go module's API or intended usage, prefer `go doc <pkg>` before reading its source.
 Drop to source when you need behavior, internals, or unexported details — `go doc` only shows exported symbols and is silent on many examples.
 
-## Go identifier search
+### Identifier search
 
 Never use `grep`, `rg`, `find`, or the Grep tool to locate Go identifiers — not for finding callers, usages, references, definitions, implementations, or types, and not for preparing renames.
 They miss aliased imports and unqualified same-package usages, and they match comments and strings.
@@ -133,7 +133,7 @@ Run the gopls CLI instead (the `golang-gopls-cli` skill has the full command ref
 Caveats: `references` reflects only the queried file's build config (GOOS/tags), and `call_hierarchy` is static-only — calls through function values or interface methods need `references` to corroborate.
 Grep stays correct for non-code text: string literals, error and log messages, comments, non-Go files, and file discovery by name.
 
-## Go error handling: separate call and check
+### Error handling: separate call and check
 
 When writing Go code, keep a function call and its error check on separate lines.
 
@@ -152,7 +152,7 @@ Right:
 
 This is a writing convention only — do not flag the inline `if err :=` form in code reviews.
 
-## Go test coverage
+### Test coverage
 
     go test -coverprofile=cover.out .
     go tool cover -func=cover.out   # per-function
@@ -169,7 +169,7 @@ Profile format (one block per line):
 - Source rewriting makes `-cover` compile errors show shifted line numbers.
 - Parse the `.out` directly (e.g. `grep ' 0$'` finds uncovered blocks).
 
-## Local source code locations
+## Local machine
 
 - All local cloned repositories are stored under `/home/pierre/Git`, in group directories like `pierrre`; explore it to find projects.
 - Third-party Go module sources (downloaded locally): look them up in the directory returned by `go env GOMODCACHE`.
