@@ -9,6 +9,8 @@ Don't add task-specific notes, transient state, or content already covered elsew
 Keep these files concise and non-redundant.
 After drafting, check for ambiguities a cold reader would hit, then compress until further cuts would lose meaning.
 
+When working in a project, record in its `AGENTS.md` anything non-obvious and durable you had to discover the hard way; skip what a future agent can infer from the repo.
+
 This repo's root `AGENTS.md` is the source of truth.
 `opencode/AGENTS.md` is a symlink to it, and `~/.config/opencode` is a symlink to this repo's `opencode/` dir, so `~/.config/opencode/AGENTS.md` and `opencode/AGENTS.md` resolve to the same file.
 `make config` creates the `~/.config/opencode` symlink, plus `~/.agents` pointing to this repo; those symlinks live outside the repo.
