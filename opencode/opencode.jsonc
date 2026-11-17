@@ -20,8 +20,8 @@
             "output": 3.60
           }
         },
-        "Zai/GLM-5.2": {
-          "name": "glm-5.2",
+        "Zai/GLM-5.3": {
+          "name": "glm-5.3",
           "limit": {
             "context": 262144,
             "output": 16384
@@ -37,8 +37,8 @@
             { "id": "max", "settings": { "reasoningEffort": "max" } }
           ]
         },
-        "Deepseek/deepseek-v4-flash-0731": {
-          "name": "deepseek-v4-flash-0731",
+        "Deepseek/deepseek-v4.1-flash-1017": {
+          "name": "deepseek-v4.1-flash-1017",
           "limit": {
             "context": 262144,
             "output": 32768
@@ -67,23 +67,6 @@
         "apiKey": "{env:SCW_SECRET_KEY_PRODUCTION}"
       },
       "models": {
-        "glm-5.2": {
-          "name": "glm-5.2",
-          "limit": {
-            "context": 262144,
-            "output": 16384
-          },
-          "cost": {
-            "input": 1.80,
-            "output": 5.50
-          },
-          "variants": [
-            { "id": "none", "settings": { "reasoningEffort": "none" } },
-            { "id": "low", "settings": { "reasoningEffort": "low" } },
-            { "id": "high", "settings": { "reasoningEffort": "high" } },
-            { "id": "max", "settings": { "reasoningEffort": "max" } }
-          ]
-        },
         "glm-5.3": {
           "name": "glm-5.3",
           "limit": {
@@ -101,8 +84,8 @@
             { "id": "max", "settings": { "reasoningEffort": "max" } }
           ]
         },
-        "deepseek-v4-flash-0731": {
-          "name": "deepseek-v4-flash-0731",
+        "deepseek-v4.1-flash-1017": {
+          "name": "deepseek-v4.1-flash-1017",
           "limit": {
             "context": 262144,
             "output": 32768
@@ -119,46 +102,6 @@
             { "id": "low", "settings": { "reasoningEffort": "low" } },
             { "id": "high", "settings": { "reasoningEffort": "high" } },
             { "id": "max", "settings": { "reasoningEffort": "max" } }
-          ]
-        },
-        "deepseek-v4.1-flash": { // tmp
-          "name": "deepseek-v4.1-flash",
-          "limit": {
-            "context": 262144,
-            "output": 32768
-          },
-          "cost": {
-            "input": 0.40,
-            "output": 0.80,
-            "cache": {
-              "read": 0.08
-            }
-          },
-          "variants": [
-            { "id": "none", "settings": { "reasoningEffort": "none" } },
-            { "id": "low", "settings": { "reasoningEffort": "low" } },
-            { "id": "high", "settings": { "reasoningEffort": "high" } },
-            { "id": "max", "settings": { "reasoningEffort": "max" } }
-          ]
-        },
-        "qwen3.8-27b": {
-          "name": "qwen3.8-27b",
-          "limit": {
-            "context": 262144,
-            "output": 32768
-          },
-          "cost": {
-            "input": 0.60,
-            "output": 3.30,
-            "cache": {
-              "read": 0.12
-            }
-          },
-          "variants": [
-            { "id": "none", "settings": { "reasoningEffort": "none" } },
-            { "id": "low", "settings": { "reasoningEffort": "low" } },
-            { "id": "medium", "settings": { "reasoningEffort": "medium" } },
-            { "id": "xhigh", "settings": { "reasoningEffort": "xhigh" } }
           ]
         }
       }
